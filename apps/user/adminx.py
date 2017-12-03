@@ -14,9 +14,10 @@ class BaseSetting(object):
 
 
 class GlobalSettings(object):
-    site_title = u'一念永恒'
-    site_footer = u'power by lei.wang'
+    site_title = "后台管理"
+    site_footer = u'后台管理'
     menu_style = 'accordion'
+
 
 class EmailVerifyRecordAdmin(object):
     list_display = ['code', 'email', 'send_type', 'send_time']

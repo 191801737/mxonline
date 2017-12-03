@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'captcha',
     'utils',
     'pure_pagination',
-    'server',
+    'DjangoUeditor',
 ]
 AUTH_USER_MODEL = "user.UserProfile"
 
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -158,10 +158,10 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 EMAIL_HOST = 'smtp.sina.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'django2017@sina.com'
-EMAIL_HOST_PASSWORD = 'Root@123'
+EMAIL_HOST_USER = 'django2017@sina.com'  # 登陆用户
+EMAIL_HOST_PASSWORD = 'Root@123'  # 密码
 EmAIL_USE_TLS = False
-EMAIL_FROM = 'django2017@sina.com'
+EMAIL_FROM = 'django2017@sina.com'  # 指明发件人
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

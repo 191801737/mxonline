@@ -2,14 +2,14 @@
 {% block title %}公开课列表{% endblock %}
 {% load staticfiles %}
 {% block custom_bread %}
-<section>
-    <div class="wp">
-        <ul class="crumbs">
-            <li><a href="{% url 'index' %}">首页</a>></li>
-            <li>公开课</li>
-        </ul>
-    </div>
-</section>
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li>公开课</li>
+            </ul>
+        </div>
+    </section>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
                         <ul class="tab_header">
                             <li {% if sort == '' %}class="active"{% endif %}><a href="?sort=">最新 </a></li>
                             <li {% if sort == 'hot' %}class="active"{% endif %}><a href="?sort=hot">最热门</a></li>
-                            <li {% if sort == 'student' %}class="active"{% endif %}><a href="?sort=students">参与人数</a>
+                            <li {% if sort == 'students' %}class="active"{% endif %}><a href="?sort=students">参与人数</a>
                             </li>
                         </ul>
                     </div>
@@ -31,8 +31,7 @@
                                 {% for course in courses.object_list %}
                                     <div class="box">
                                         <a href="{% url 'course:course_detail' course.id %}">
-                                            <img width="280" height="350" class="scrollLoading"
-                                                 src="{{ MEDIA_URL }}{{ course.image }}"/>
+                                            <img width="280" height="350" class="scrollLoading" src="{{ MEDIA_URL }}{{ course.image }}"/>
                                         </a>
                                         <div class="des">
                                             <a href="{% url 'course:course_detail' course.id %}">
@@ -85,13 +84,13 @@
                         {% for hot_course in hot_courses %}
                             <dl>
                                 <dt>
-                                    <a target="_blank" href="">
-                                        <img width="240" height="220" class="scrollLoading"
-                                             src="{{ MEDIA_URL }}{{ hot_course.image }}"/>
+                                    <a target="_blank" href="{% url 'course:course_detail' hot_course.id %}">
+                                        <img width="240" height="220" class="scrollLoading" src="{{ MEDIA_URL }}{{ hot_course.image }}"/>
                                     </a>
                                 </dt>
                                 <dd>
-                                    <a target="_blank" href=""><h2>{{ hot_course.name }}</h2></a>
+                                    <a target="_blank" href="{% url 'course:course_detail' hot_course.id %}"><h2>{{ hot_course.name }}</h2></a>
+{#                                    hot_course.get_degree_display   CharField中choices显示方式#}
                                     <span class="fl">难度：<i class="key">{{ hot_course.get_degree_display }}</i></span>
                                 </dd>
                             </dl>

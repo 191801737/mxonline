@@ -14,7 +14,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdFrom, UploadImageForm
 from .forms import UserInfoForm
-from utils.send_email import send_register_email
+from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMinxin
 from operation.models import UserCourse, UserFavorite, UserMessage
 from organization.models import CourseOrg, Teacher
@@ -29,7 +29,6 @@ class CustomBackend(ModelBackend):
             if user.check_password(password):
                 return user
         except Exception as e:
-            print(e)
             return None
 
 
@@ -50,7 +49,7 @@ class ActiveUserView(View):
 class RegisterView(View):
     def get(self, request):
         register_form = RegisterForm()
-        return render(request, 'register.html', {'register_form': register_form})
+        return render(request, 'register.html', locals())
 
     def post(self, request):
         register_form = RegisterForm(request.POST)
@@ -75,23 +74,23 @@ class RegisterView(View):
             send_register_email(user_name, 'register')
             return render(request, 'login.html')
         else:
-            return render(request, 'register.html', {'register_form': register_form})
+            return render(request, 'register.html', locals())
 
 
 class LogoutView(View):
     """
     用户登出
     """
+
     def get(self, request):
         logout(request)
 
         return HttpResponseRedirect(reverse("index"))
 
 
-
 class LoginView(View):
     def get(self, request):
-        return render(request, 'login.html', {})
+        return render(request, 'login.html', locals())
 
     def post(self, request):
         login_form = LoginForm(request.POST)
@@ -104,17 +103,17 @@ class LoginView(View):
                     login(request, user)
                     return HttpResponseRedirect(reverse("index"))
                 else:
-                    return render(request, 'login.html', {'msg': '用户名或者密码错误...'})
+                    return render(request, 'login.html', {'msg': '用户未激活...'})
             else:
                 return render(request, 'login.html', {'msg': '用户名或者密码错误...'})
         else:
-            return render(request, 'login.html', {'login_form': login_form})
+            return render(request, 'login.html', locals())
 
 
 class ForgetPwdView(View):
     def get(self, request):
         forget_form = ForgetForm()
-        return render(request, 'forgetpwd.html', {'forget_form': forget_form})
+        return render(request, 'forgetpwd.html', locals())
 
     def post(self, request):
         forget_form = ForgetForm(request.POST)
@@ -123,11 +122,12 @@ class ForgetPwdView(View):
             send_register_email(email, 'forget')
             return render(request, 'send_success.html')
         else:
-            return render(request, 'forgetpwd.html', {'forget_form': forget_form})
+            return render(request, 'forgetpwd.html', locals())
 
 
 class ResetUserView(View):
     def get(self, request, active_code):
+
         all_recodes = EmailVerifyRecord.objects.filter(code=active_code)
         if all_recodes:
             for recode in all_recodes:
@@ -150,6 +150,7 @@ class ModifyPwdView(View):
             user = UserProfile.objects.get(email=email)
             user.password = make_password(pwd2)
             user.save()
+            # 可以扩展 设置链接过期时间，和失效
             return render(request, 'login.html')
         else:
             email = request.POST.get('email', '')

@@ -13,12 +13,12 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.Form):
     email = forms.EmailField(required=True)
     password = forms.CharField(required=True, min_length=5)
-    captcha = CaptchaField(error_messages={'invalid': u'验证码错误'})
+    captcha = CaptchaField()
 
 
 class ForgetForm(forms.Form):
     email = forms.EmailField(required=True)
-    captcha = CaptchaField(error_messages={'invalid': u'验证码错误'})
+    captcha = CaptchaField()
 
 
 class ModifyPwdFrom(forms.Form):
@@ -36,4 +36,3 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['nick_name', 'gender', 'birthday', 'address', 'mobile']
-

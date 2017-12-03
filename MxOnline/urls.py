@@ -23,18 +23,20 @@ from user.views import IndexView
 from user.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetUserView, ModifyPwdView, LogoutView
 from MxOnline.settings import MEDIA_ROOT
 
-
 urlpatterns = [
-    url(r'^admin/', xadmin.site.urls),
+    url(r'^admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
     # url(r'^$', IndexView.as_view(template_name='index.html'), name='index'),
     url(r'^login/$', LoginView.as_view(), name='user_login'),
+
     url(r'^logout/$', LogoutView.as_view(), name='user_logout'),
+
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name='user_active'),
-    url(r'^reset/(?P<active_code>.*)/$', ResetUserView.as_view(), name='reset_pwd'),
     url(r'^forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
+    url(r'^reset/(?P<active_code>.*)/$', ResetUserView.as_view(), name='reset_pwd'),
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name='modify_pwd'),
 
     # 课程机构url

@@ -2,6 +2,8 @@ from django.db import models
 import datetime
 
 from organization.models import CourseOrg, Teacher
+
+
 # Create your models here.
 
 
@@ -85,3 +87,6 @@ class CourseResource(models.Model):
     class Meta:
         verbose_name = u'课程资源'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
