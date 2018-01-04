@@ -1,3 +1,6 @@
-.pyc
-.xml
+#python
+.idea/
+*.xml
+*.pyc
+
 /MxOnline/settings.py
