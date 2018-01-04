@@ -208,7 +208,7 @@ class UpdatePwdView(View):
             return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
 
 
-class SendEmailView(View):
+class SendEmailView(LoginRequiredMinxin, View):
     """
     发送邮箱验证码
     """

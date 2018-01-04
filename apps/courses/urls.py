@@ -4,10 +4,10 @@ from django.conf.urls import url
 
 
 from .views import CourseListView, CourseDetailView, CourseInfoView, CommentsView, AddCommentsView, VideoPlayView
-
+from .views import CourseTestView
 
 urlpatterns = [
-    # 课程机构首页
+    # 课程列表页
     url(r'^list/$', CourseListView.as_view(), name='course_list'),
 
     # 课程详情页
@@ -24,5 +24,8 @@ urlpatterns = [
 
     # 课程详情页
     url(r'^video/(?P<video_id>\d+)/$', VideoPlayView.as_view(), name='video_play'),
+
+    # CourseTestView测试
+    url(r'^test_json/$', CourseTestView.as_view(), name='test_json'),
 
 ]

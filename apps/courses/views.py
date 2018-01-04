@@ -10,6 +10,18 @@ from operation.models import UserFavorite, CourseComments, UserCourse
 from utils.mixin_utils import LoginRequiredMinxin
 # Create your views here.
 
+import json
+from django.core import serializers
+from django.http import JsonResponse
+
+
+class CourseTestView(View):
+    def get(self, request):
+        all_courses = Course.objects.all()
+        json_data = serializers.serialize('json', all_courses)
+        json.data = json.loads(json_data)
+        return JsonResponse(json_data, safe=False)
+
 
 class CourseListView(View):
     """
@@ -22,7 +34,9 @@ class CourseListView(View):
         # 课程搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
-            all_courses = all_courses.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords) | Q(detail__icontains=search_keywords) )
+            all_courses = all_courses.filter(Q(name__icontains=search_keywords) |
+                                             Q(desc__icontains=search_keywords) |
+                                             Q(detail__icontains=search_keywords))
 
         # 课程排序
         sort = request.GET.get('sort', '')
@@ -97,7 +111,7 @@ class CourseInfoView(LoginRequiredMinxin, View):
         # 取出所有课程ID
         course_ids = [user_course.course.id for user_course in all_user_courses]
         # 获取学过该用户学过的其它的所有课程
-        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:3]
 
         course_resources = CourseResource.objects.filter(course=course)
         return render(request, "course-video.html", locals())

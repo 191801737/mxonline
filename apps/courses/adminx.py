@@ -11,6 +11,8 @@ class CourseAdmin(object):
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students']
     search_fields = ['name', 'desc', 'detail', 'degree', 'students']
 
+    style_fields = {"detail": "ueditor"}
+
 
 class LessonAdmin(object):
     list_display = ['course', 'name', 'add_time']

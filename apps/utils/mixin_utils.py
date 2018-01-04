@@ -9,6 +9,7 @@ class LoginRequiredMinxin(object):
     """
     验证用户是否登陆
     """
+
     @method_decorator(login_required(login_url='/login'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMinxin, self).dispatch(request, *args, **kwargs)

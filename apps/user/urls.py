@@ -3,10 +3,8 @@
 
 from django.conf.urls import url
 
-
 from .views import UserInfoView, UploadImageView, UpdatePwdView, SendEmailView, UpdateEmailView
 from .views import MyCourseView, MyFavOrgView, MyFavTeacherView, MyFavCourseView, MyMessageView
-
 
 urlpatterns = [
     # 用户信息
@@ -40,4 +38,3 @@ urlpatterns = [
     url(r'^mymessage/$', MyMessageView.as_view(), name='mymessage'),
 
 ]
-
